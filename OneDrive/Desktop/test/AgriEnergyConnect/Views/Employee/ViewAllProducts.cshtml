@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AgriEnergyConnect.Models.Product>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "All Products";
+
+    var query = Context.Request.Query;
+    var farmerName = query["farmerName"];
+    var productName = query["productName"];
+    var productType = query["productType"];
+    var startDate = query["startDate"];
+    var endDate = query["endDate"];
+}
+//displays all products
+<h2>All Products</h2>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-2">
+        <input type="text" name="farmerName" value="@farmerName" class="form-control" placeholder="Farmer Name" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="productName" value="@productName" class="form-control" placeholder="Product Name" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="productType" value="@productType" class="form-control" placeholder="Product Type" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="startDate" value="@startDate" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="endDate" value="@endDate" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Farmer</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date Added</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Farmer?.Name</td>
+                <td>@product.Name</td>
+                <td>@product.Type</td>
+                <td>@product.Price</td>
+                <td>@product.Quantity</td>
+                <td>@product.DateAdded.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
